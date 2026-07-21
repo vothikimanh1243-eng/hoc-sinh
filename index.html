@@ -102,24 +102,26 @@ h2 {
     box-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
 }
         
+/* Tăng kích thước logo to hơn rõ rệt */
 .site-logo {
     background: rgba(0, 243, 255, 0.1);
-    border: 2px solid #00f3ff;
-    width: 55px;
-    height: 55px;
+    border: 3px solid #00f3ff;
+    width: 90px;   /* Tăng từ 55px lên 90px */
+    height: 90px;  /* Tăng từ 55px lên 90px */
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
-    overflow: hidden; /* Giúp ảnh không bị tràn ra ngoài khung tròn */
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
+    overflow: hidden;
+    flex-shrink: 0;
 }
 
-/* Định dạng kích thước file ảnh logo của bạn */
+/* Kích thước hình ảnh bên trong */
 .logo-img {
-    width: 80%;
-    height: 80%;
-    object-fit: contain; /* Giúp logo giữ nguyên tỉ lệ không bị méo */
+    width: 85%;
+    height: 85%;
+    object-fit: contain;
 }
     </style>
 </head>
