@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cổng Học Tập & Mô Phỏng Khoa Học</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Trang Quản Trị Admin - Cổng Học Tập</title>
     <style>
-        /* style.css - Giao diện Cổng Học Tập */
-body {
+      body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f4f7f6;
     color: #333;
@@ -143,30 +141,101 @@ header {
     </style>
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <!-- LOGO HỆ THỐNG -->
-            <div class="site-logo">
-                <img src="logo-dark-removebg-preview.png" alt="Logo Trường/Hệ Thống" class="logo-img">
-            </div>
-            <div>
-                <h1>CỔNG DỤNG CỤ HỌC TẬP & MÔ PHỎNG</h1>
-                <p>Hệ thống thực hành trực tuyến dành cho học sinh</p>
-            </div>
-        </div>
-    </header>
 
-    <main>
-        <h2>Danh sách công cụ & bài thực hành:</h2>
-        
-        <div id="toolList">
-            <!-- Thẻ bài tập mẫu -->
-            <div class="tool-card">
-                <h3>Mô Phỏng Lò Phản Ứng Tokamak MK-VII</h3>
-                <p>Khám phá plasma, hệ thống từ trường và vận hành lò phản ứng tổng hợp hạt nhân an toàn.</p>
-                <a href="tokamak.html" class="btn-access">Truy cập ngay</a>
+    <div class="admin-container">
+        <div class="logo-preview">
+            <img src="logo-dark-removebg-preview.png" alt="Logo Trường/Hệ Thống" class="logo-img">
+            <div>
+                <h3 style="margin:0; font-size: 16px; color: #0b2246;">HỆ THỐNG ADMIN QUẢN TRỊ</h3>
+                <span style="font-size: 12px; color: #555;">Quản lý nội dung học tập cho học sinh</span>
             </div>
         </div>
-    </main>
+
+        <div class="admin-box">
+            <h2>Thêm Công Cụ / Bài Test Mới</h2>
+            <form id="addToolForm">
+                <label><b>Tên dụng cụ / Bài test:</b></label>
+                <input type="text" id="toolName" placeholder="Ví dụ: Mô phỏng hệ mặt trời" required>
+
+                <label><b>Mô tả ngắn:</b></label>
+                <textarea id="toolDesc" placeholder="Mô tả nội dung học tập..." rows="3" required></textarea>
+
+                <label><b>Link liên kết (URL):</b></label>
+                <input type="text" id="toolLink" placeholder="Ví dụ: tokamak.html" required>
+
+                <button type="submit">Thêm Vào Cổng Học Tập</button>
+            </form>
+        </div>
+
+        <div class="admin-box">
+            <h2>Danh Sách Công Cụ Hiện Có</h2>
+            <div id="adminToolList"></div>
+        </div>
+    </div>
+
+    <script>
+        // Lấy danh sách từ localStorage khi mở trang Admin
+        function getTools() {
+            let tools = JSON.parse(localStorage.getItem('adminTools'));
+            if (!tools) {
+                tools = [{
+                    name: "Mô Phỏng Lò Phản Ứng Tokamak MK-VII",
+                    desc: "Khám phá plasma, hệ thống từ trường và vận hành lò phản ứng tổng hợp hạt nhân an toàn.",
+                    link: "tokamak.html"
+                }];
+                localStorage.setItem('adminTools', JSON.stringify(tools));
+            }
+            return tools;
+        }
+
+        // Hiển thị danh sách ở trang Admin
+        function renderAdminList() {
+            const listContainer = document.getElementById('adminToolList');
+            const tools = getTools();
+            listContainer.innerHTML = "";
+
+            tools.forEach((tool, index) => {
+                const item = document.createElement('div');
+                item.className = 'manage-item';
+                item.innerHTML = `
+                    <div class="manage-info">
+                        <h4>${tool.name}</h4>
+                        <p>Link: ${tool.link} - <i>${tool.desc}</i></p>
+                    </div>
+                    <button class="btn-delete" onclick="deleteTool(${index})">Xóa</button>
+                `;
+                listContainer.appendChild(item);
+            });
+        }
+
+        // Xử lý thêm công cụ mới
+        document.getElementById('addToolForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('toolName').value;
+            const desc = document.getElementById('toolDesc').value;
+            const link = document.getElementById('toolLink').value;
+
+            let tools = getTools();
+            tools.push({ name, desc, link });
+            localStorage.setItem('adminTools', JSON.stringify(tools));
+
+            renderAdminList();
+            alert("Đã thêm thành công và cập nhật lên trang học sinh!");
+            this.reset();
+        });
+
+        // Hàm xóa công cụ
+        function deleteTool(index) {
+            if (confirm("Bạn có chắc chắn muốn xóa công cụ này không?")) {
+                let tools = getTools();
+                tools.splice(index, 1);
+                localStorage.setItem('adminTools', JSON.stringify(tools));
+                renderAdminList();
+                alert("Đã xóa thành công!");
+            }
+        }
+
+        renderAdminList();
+    </script>
 </body>
 </html>
