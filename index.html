@@ -102,12 +102,30 @@ h2 {
     box-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
 }
         
-/* Tăng kích thước logo to hơn rõ rệt */
+/* Cấu trúc lại Header để logo và chữ dính liền và nằm đúng vị trí */
+header {
+    background: #0b2246;
+    color: #fff;
+    padding: 20px;
+    text-align: left; /* Đổi về căn trái hoặc căn giữa tùy ý */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Đưa toàn bộ cụm logo + chữ ra giữa trang */
+    gap: 20px;               /* Khoảng cách giữa logo và chữ */
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Khung logo kích thước 90px như ý bạn */
 .site-logo {
     background: rgba(0, 243, 255, 0.1);
     border: 3px solid #00f3ff;
-    width: 90px;   /* Tăng từ 55px lên 90px */
-    height: 90px;  /* Tăng từ 55px lên 90px */
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -117,7 +135,6 @@ h2 {
     flex-shrink: 0;
 }
 
-/* Kích thước hình ảnh bên trong */
 .logo-img {
     width: 85%;
     height: 85%;
